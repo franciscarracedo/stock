@@ -49,7 +49,7 @@ public class ProductMaster {
     @JsonManagedReference
     private List<InventoryMovement> inventoryMovements;
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
     private CurrentStock currentStock;
 

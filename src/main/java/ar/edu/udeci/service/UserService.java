@@ -20,7 +20,7 @@ public class UserService {
     }
 
     public User registerUser(String username, String rawPassword, Set<Role> roles) {
-        if (userRepository.existsById(username)) {
+        if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Usuario ya existe");
         }
 

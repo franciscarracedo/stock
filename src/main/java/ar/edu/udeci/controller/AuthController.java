@@ -26,6 +26,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+
         Role role = roleRepository.findById("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 
