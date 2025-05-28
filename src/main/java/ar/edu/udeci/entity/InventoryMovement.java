@@ -18,8 +18,9 @@ public class InventoryMovement {
     @Column(name = "movement_id", length = 10)
     private String movementId;
 
-    @Column(name = "date")
-    private Timestamp date;
+
+    @Column(name = "movement_date")
+    private Timestamp movementDate;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

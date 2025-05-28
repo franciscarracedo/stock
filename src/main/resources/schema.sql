@@ -20,16 +20,15 @@ CREATE TABLE product_master (
 
 
 CREATE TABLE inventory_movement (
-                                                  movement_id VARCHAR(10) PRIMARY KEY,
-    date TIMESTAMP,
-    product_id VARCHAR(10),
-    movement_type VARCHAR(20),
-    quantity INT,
-    order_id VARCHAR(20),
-    notes TEXT,
-    FOREIGN KEY (product_id) REFERENCES product_master(product_id)
-    );
-
+                                    movement_id VARCHAR(10) PRIMARY KEY,
+                                    movement_date TIMESTAMP,  -- <== CAMBIADO
+                                    product_id VARCHAR(10),
+                                    movement_type VARCHAR(20),
+                                    quantity INT,
+                                    order_id VARCHAR(20),
+                                    notes TEXT,
+                                    FOREIGN KEY (product_id) REFERENCES product_master(product_id)
+);
 CREATE TABLE current_stock (
                                              product_id VARCHAR(10) PRIMARY KEY,
     quantity INT NOT NULL,
