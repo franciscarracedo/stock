@@ -20,7 +20,7 @@ public class InventoryMovement {
 
 
     @Column(name = "movement_date")
-    private Timestamp movementDate;
+    private Timestamp date;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
