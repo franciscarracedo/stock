@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-
 @Service
 public class UserService {
 
@@ -19,15 +18,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String username, String rawPassword, Set<Role> roles) {
-        if (userRepository.findByUsername(username).isPresent()) {
-            throw new RuntimeException("Usuario ya existe");
-        }
-
+    public void registerUser(String username, String password, Set<Role> roles) {
         User user = new User();
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(rawPassword));
+        user.setPassword(passwordEncoder.encode(password));
         user.setRoles(roles);
-        return userRepository.save(user);
+        user.setEnabled(true);
+        userRepository.save(user);
     }
 }

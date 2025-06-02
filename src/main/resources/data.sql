@@ -43,5 +43,9 @@ INSERT INTO roles (name) VALUES
 
 -- USUARIOS
 INSERT INTO users (username, password, enabled) VALUES
-                                                    ('admin', '$2a$10$7Q0VLZEM0r0KtW6vFd3nGuZ0zYddjJdFrh5NruztTO3ZBjxGnpCZS', TRUE),
+                                                    ('admin', '$2a$10$NA0DMvtTurvh7BUiAlkCteLr9mRofiZIbC..72CJGDMoc9pekAS1q', TRUE),
                                                     ('usuario', '$2a$10$CSznGy2zkzE88V2Qlmy9Euqpq4RXoh1zVm.GXyyZLPuEdQLBKND7i', TRUE);
+
+INSERT INTO users_roles (user_id, role_name) VALUES
+                                                 (1, 'ROLE_ADMIN'),
+                                                 (2, 'ROLE_USER');
