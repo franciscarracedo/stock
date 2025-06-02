@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -36,13 +37,11 @@ class ProductControllerTest {
 
     @BeforeEach
     void setup() {
-        // Eliminar en orden para respetar claves foráneas
         jdbcTemplate.execute("DELETE FROM predictor_stock");
         jdbcTemplate.execute("DELETE FROM inventory_movement");
         jdbcTemplate.execute("DELETE FROM current_stock");
         jdbcTemplate.execute("DELETE FROM product_master");
 
-        // Crear un producto de ejemplo
         ProductMaster product = new ProductMaster();
         product.setProductId("TEST001");
         product.setProductName("Producto Test");
@@ -91,9 +90,15 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.productName").value("Nuevo Producto"));
     }
 
+
     @Test
+    @Transactional
     void testUpdateProduct() throws Exception {
         ProductMaster updated = productRepository.findById("TEST001").get();
+
+        // Forzamos la carga de relaciones perezosas
+        updated.getInventoryMovements().size();
+
         updated.setProductName("Producto Modificado");
 
         mockMvc.perform(put("/api/products/TEST001")
@@ -102,6 +107,7 @@ class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.productName").value("Producto Modificado"));
     }
+
 
     @Test
     void testDeactivateProduct() throws Exception {

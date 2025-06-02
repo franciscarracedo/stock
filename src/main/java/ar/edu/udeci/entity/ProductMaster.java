@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,7 +48,7 @@ public class ProductMaster {
 
     @OneToMany(mappedBy = "product")
     @JsonManagedReference
-    private List<InventoryMovement> inventoryMovements;
+    private List<InventoryMovement> inventoryMovements = new ArrayList<>();
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
