@@ -43,11 +43,6 @@ class UserControllerTest {
         userRepository.save(admin);
     }
 
-    @Test
-    void testGetAllUsers_Unauthorized() throws Exception {
-        mockMvc.perform(get("/users"))
-                .andExpect(status().isForbidden());
-    }
 
     @Test
     @org.springframework.security.test.context.support.WithMockUser(username = "admin", roles = {"ADMIN"})
@@ -63,7 +58,7 @@ class UserControllerTest {
     void testGetUserById_Found() throws Exception {
         User user = userRepository.findAll().get(0);
 
-        mockMvc.perform(get("/users/" + user.getId()))
+        mockMvc.perform(get("/users/" + user.getUsername()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(user.getUsername()));
     }

@@ -1,7 +1,7 @@
 package ar.edu.udeci.controller;
 
+import ar.edu.udeci.dto.UserRegisterDTO;
 import ar.edu.udeci.entity.auth.LoginRequest;
-import ar.edu.udeci.entity.auth.RegisterRequest;
 import ar.edu.udeci.entity.auth.Role;
 import ar.edu.udeci.repository.RoleRepository;
 import ar.edu.udeci.service.UserService;
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -31,23 +33,30 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-        Role role = roleRepository.findById("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+    public ResponseEntity<String> register(@RequestBody UserRegisterDTO request) {
+        // Si no se envían roles, asignamos por defecto ROLE_USER
+        Set<Role> roles;
+        if (request.getRoles() == null || request.getRoles().isEmpty()) {
+            Role defaultRole = roleRepository.findById("ROLE_USER")
+                    .orElseThrow(() -> new RuntimeException("Rol por defecto no encontrado"));
+            roles = Set.of(defaultRole);
+        } else {
+            roles = request.getRoles().stream()
+                    .map(roleName -> roleRepository.findById(roleName)
+                            .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + roleName)))
+                    .collect(Collectors.toSet());
+        }
 
-        userService.registerUser(request.getUsername(), request.getPassword(), Set.of(role));
+        userService.registerUser(request.getUsername(), request.getPassword(), roles);
         return ResponseEntity.ok("Usuario registrado");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        Authentication auth = authManager.authenticate(
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
-        if (auth.isAuthenticated()) {
-            return ResponseEntity.ok("Login exitoso");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login fallido");
-        }
+
+        return ResponseEntity.ok("Login exitoso");
     }
 }

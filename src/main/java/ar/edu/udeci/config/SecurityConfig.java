@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -21,12 +22,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/api/products/**").permitAll()
                         .requestMatchers("/users").permitAll()
-                        .requestMatchers("/users/**").hasRole("ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
