@@ -34,10 +34,6 @@ public class PredictorStock {
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     @JsonBackReference
     private ProductMaster product;
-    // Getters y setters
-    // Constructor vacío
-    // Constructor con campos
 
-    // toString, equals y hashCode
 }
 
