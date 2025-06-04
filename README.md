@@ -4,6 +4,11 @@ Este proyecto es una aplicación web desarrollada con **Spring Boot** que permit
 
 ---
 
+## 🧪 Cómo correr el aplicativo?
+
+Desde tu IDE: Click derecho sobre Main.java y run!.
+
+
 ## 🧩 Funcionalidades principales
 
 - 👤 **Autenticación y autorización por roles** (`ADMIN`, `USER`, etc.)
@@ -63,7 +68,7 @@ Seguridad implementada con:
 
 ## 🧪 Cómo correr los tests
 
-Desde tu IDE o consola: Click derecho sobre java (test) y run test!
+Desde tu IDE: Click derecho sobre java (test) y run test!
 
 
 🧰 Cómo correr el proyecto
