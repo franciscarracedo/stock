@@ -34,23 +34,6 @@ Este proyecto es una aplicación web desarrollada con **Spring Boot** que permit
 
 ---
 
-## 🛠️ Estructura del proyecto
-
-src/
-├── controller/ # Controladores REST
-├── entity/ # Entidades JPA (ProductMaster, PredictorStock, User, Role, etc.)
-├── repository/ # Interfaces JPA
-├── service/ # Lógica de negocio
-├── config/ # Configuración de seguridad
-├── dto/ # (opcional) Objetos de transferencia
-├── resources/
-│ ├── application.properties
-│ ├── schema.sql # Creación de tablas
-│ └── data.sql # Datos iniciales
-└── test/ # Test unitarios y de integración
-
----
-
 ## ✅ Cobertura de tests
 
 Se realizaron pruebas con **JUnit 5** y **Mockito**, incluyendo:
